@@ -75,7 +75,7 @@ const App=()=>
     }
 
     return(
-        <article>
+        <article className="card">
         {Available?(<button className="Add" type="button" onClick={()=>{Setadd(true),Setavai(false)}}>Add</button>):(<button className="Close" type="button" onClick={()=>{Setadd(false),SetEdit(false),Setavai(true)}}>Close</button>)}
         {Add?(<Form HandleSubmit={HandleSubmit} Handle={Handle} form={formdata} />)
         :( <table className="table">
@@ -96,7 +96,7 @@ const App=()=>
                                 <td className="field_data">{name}</td>
                                 <td className="field_data">{email}</td>
                                 <td className="field_data">{phone}</td>
-                                <td className="field_data"><button className="update" onClick={()=>{SetEdit(true),Setadd(true),Setavai(false),Setid(_id),Updateform(name,email,phone)}}>Update</button></td>
+                                <td className="field_data"><button className="update" onClick={()=>{SetEdit(true),Setavai(false),Setid(_id),Updateform(name,email,phone)}}>Update</button></td>
                                 <td className="field_data"><button className="delete" onClick={()=>{Del(_id)}}>Delete</button></td>
                             </tr>
                         )

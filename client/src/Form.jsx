@@ -1,7 +1,7 @@
+import "./Form.css"
 const Form=({HandleSubmit,Handle,form})=>
 {
     return(
-    <article>
             
             <div className="Addcontainer">
                 <form onSubmit={HandleSubmit}>
@@ -10,7 +10,7 @@ const Form=({HandleSubmit,Handle,form})=>
                     Phone:<input type="number" name="phone"  onChange={Handle} value={form.phone}  autoComplete="false"/>
                     <button  className="submit">Submit</button>
                 </form>
-            </div></article>
+            </div>
     )
 }
 export default Form; 
