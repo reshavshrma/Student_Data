@@ -1,51 +1,77 @@
 const express = require("express");
-const app= express();
+const app = express();
 const mongoose = require("mongoose");
-const cors=require("cors")
-app.use(cors())
-app.use(express.json()) 
+const cors = require("cors");
 
-const schema = mongoose.Schema({
-    name:String,
-    email:String,
-    phone:String
+app.use(cors());
+app.use(express.json()); 
 
+// Mongoose schema and model
+const schema = new mongoose.Schema({
+    name: String,
+    email: String,
+    phone: String
+});
+
+const Usermodel = mongoose.model("users", schema);
+
+// Routes
+
+// Get all users
+app.get("/", async (req, res) => { 
+    try {
+        const newdata = await Usermodel.find({});
+        res.json({ people: newdata });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Create a new user
+app.post("/create", async (req, res) => { 
+    try {
+        const newdata = new Usermodel(req.body);
+        await newdata.save();
+        res.json({ people: newdata });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Update a user by ID
+app.put("/update/:id", async (req, res) => {
+    const { id } = req.params;
+    const { name, email, phone } = req.body;
+
+    try {
+        const data = await Usermodel.updateOne({ _id: id }, { name, email, phone });
+        res.json({ people: data });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Delete a user by ID
+app.delete("/delete/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const data = await Usermodel.deleteOne({ _id: id });
+        res.json({ people: data });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});  
+
+// Connect to MongoDB and start server
+mongoose.connect("mongodb://localhost:27017/MERNCRUD", { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
 })
-
-const Usermodel = mongoose.model("users",schema);
-
-app.get("/", async (req,res)=>
-{ 
-    const newdata=await Usermodel.find({});
-    res.json({people:newdata});
+.then(() => {
+    console.log("✅ Connected to MongoDB");
+    app.listen(5000, () => {
+        console.log("🚀 Server is running on http://localhost:5000");
+    });
 })
-
-app.post("/create", async  (req,res)=>{ 
-    const newdata= new Usermodel(req.body)
-    await newdata.save();
-    res.send({people:newdata})
-})
-
-app.put("/update/:id", async (req,res)=>
-{
-    const {id}=req.params;
-    const{name,email,phone}=req.body;
-    const data=await Usermodel.updateOne({_id:id},{name:name,email:email,phone:phone}) 
-    res.send({people:data})
-
-})
-
-app.delete("/delete/:id",async (req,res)=>{
-    const {id}=req.params;
-    const data=await Usermodel.deleteOne({_id:id})
-    res.send({people:data})     
-})  
-        
-
-mongoose.connect("YOUR CONNECTION LINK")
-.then(()=> 
-{
-    console.log("Connected to Mongodb")   
-    console.log("Server is running...")
-    app.listen(5000);
-}).catch((err)=>console.log(err)) 
+.catch((err) => console.log("❌ Failed to connect to MongoDB:", err));
