@@ -1,7 +1,7 @@
 {
   "name": "mern-crud",
   "version": "1.0.0",
-  "description": "Welcome to the MERN CRUD App project! This project is a CRUD (Create, Read, Update, Delete) application built with the MERN stack. It allows users to perform CRUD operations on data stored in a MongoDB database.",
+  "description": "MERN CRUD App",
   "homepage": "https://github.com/reshavshrma/Student_Data#readme",
   "bugs": {
     "url": "https://github.com/reshavshrma/Student_Data/issues"
@@ -13,10 +13,10 @@
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "App.js",
   "scripts": {
-    "dev": "node index.js",
-    "start": "node index.js",
+    "dev": "node App.js",
+    "start": "node App.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
