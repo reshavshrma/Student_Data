@@ -12,7 +12,7 @@ const App = () => {
   const [Edit, SetEdit] = useState(false);
   const [id, Setid] = useState(null);
   
-  axios.defaults.baseURL = "http://localhost:5000/";
+  axios.defaults.baseURL = "https://student-data-server-xig1.onrender.com";
 
   const Fetchpeople = async () => {
     const avai = await axios.get("/");
