@@ -10,7 +10,9 @@ app.use(express.json());
 const schema = new mongoose.Schema({
     name: String,
     email: String,
-    phone: String
+    phone: String,
+    address: String,
+    age: Number
 });
 
 const Usermodel = mongoose.model("users", schema);
@@ -41,10 +43,10 @@ app.post("/create", async (req, res) => {
 // Update a user by ID
 app.put("/update/:id", async (req, res) => {
     const { id } = req.params;
-    const { name, email, phone } = req.body;
+    const { name, email, phone, address, age } = req.body; // Include address and age for updating
 
     try {
-        const data = await Usermodel.updateOne({ _id: id }, { name, email, phone });
+        const data = await Usermodel.updateOne({ _id: id }, { name, email, phone, address, age }); // Include address and age in update
         res.json({ people: data });
     } catch (err) {
         res.status(500).json({ error: err.message });
